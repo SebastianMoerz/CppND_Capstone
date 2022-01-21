@@ -53,7 +53,7 @@ CMAKE_BINARY_DIR = /home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesm
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/SnakeGame.dir/all
+all: CMakeFiles/Darwin.dir/all
 
 .PHONY : all
 
@@ -63,36 +63,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/SnakeGame.dir/clean
+clean: CMakeFiles/Darwin.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/SnakeGame.dir
+# Target rules for target CMakeFiles/Darwin.dir
 
 # All Build rule for target.
-CMakeFiles/SnakeGame.dir/all:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/depend
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target SnakeGame"
-.PHONY : CMakeFiles/SnakeGame.dir/all
+CMakeFiles/Darwin.dir/all:
+	$(MAKE) -f CMakeFiles/Darwin.dir/build.make CMakeFiles/Darwin.dir/depend
+	$(MAKE) -f CMakeFiles/Darwin.dir/build.make CMakeFiles/Darwin.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target Darwin"
+.PHONY : CMakeFiles/Darwin.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/SnakeGame.dir/rule: cmake_check_build_system
+CMakeFiles/Darwin.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/build/CMakeFiles 6
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/SnakeGame.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/Darwin.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/build/CMakeFiles 0
-.PHONY : CMakeFiles/SnakeGame.dir/rule
+.PHONY : CMakeFiles/Darwin.dir/rule
 
 # Convenience name for target.
-SnakeGame: CMakeFiles/SnakeGame.dir/rule
+Darwin: CMakeFiles/Darwin.dir/rule
 
-.PHONY : SnakeGame
+.PHONY : Darwin
 
 # clean rule for target.
-CMakeFiles/SnakeGame.dir/clean:
-	$(MAKE) -f CMakeFiles/SnakeGame.dir/build.make CMakeFiles/SnakeGame.dir/clean
-.PHONY : CMakeFiles/SnakeGame.dir/clean
+CMakeFiles/Darwin.dir/clean:
+	$(MAKE) -f CMakeFiles/Darwin.dir/build.make CMakeFiles/Darwin.dir/clean
+.PHONY : CMakeFiles/Darwin.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

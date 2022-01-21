@@ -1,16 +1,16 @@
 #include "controller.h"
 #include <iostream>
 #include "SDL.h"
-#include "snake.h"
+#include "player.h"
 
 
-void Controller::ChangeDirection(Snake &snake, Snake::Direction input, Snake::Direction opposite) const {
-  //if (snake.direction != opposite || snake.size == 1) snake.direction = input;
-  snake.direction = input;
+void Controller::ChangeDirection(Player &player, Player::Direction input, Player::Direction opposite) const {
+  //if (Player.direction != opposite || Player.size == 1) Player.direction = input;
+  player.direction = input;
   return;
 }
 
-void Controller::HandleInput(bool &running, Snake &snake) const {
+void Controller::HandleInput(bool &running, Player &player) const {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
@@ -18,23 +18,23 @@ void Controller::HandleInput(bool &running, Snake &snake) const {
     } else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym) {
         case SDLK_UP:
-          ChangeDirection(snake, Snake::Direction::kUp,
-                          Snake::Direction::kDown);
+          ChangeDirection(player, Player::Direction::kUp,
+                          Player::Direction::kDown);
           break;
 
         case SDLK_DOWN:
-          ChangeDirection(snake, Snake::Direction::kDown,
-                          Snake::Direction::kUp);
+          ChangeDirection(player, Player::Direction::kDown,
+                          Player::Direction::kUp);
           break;
 
         case SDLK_LEFT:
-          ChangeDirection(snake, Snake::Direction::kLeft,
-                          Snake::Direction::kRight);
+          ChangeDirection(player, Player::Direction::kLeft,
+                          Player::Direction::kRight);
           break;
 
         case SDLK_RIGHT:
-          ChangeDirection(snake, Snake::Direction::kRight,
-                          Snake::Direction::kLeft);
+          ChangeDirection(player, Player::Direction::kRight,
+                          Player::Direction::kLeft);
           break;
       }
     }

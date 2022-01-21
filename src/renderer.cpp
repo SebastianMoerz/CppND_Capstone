@@ -16,7 +16,7 @@ Renderer::Renderer(const std::size_t screen_width,
   }
 
   // Create Window
-  sdl_window = SDL_CreateWindow("Snake Game", SDL_WINDOWPOS_CENTERED,
+  sdl_window = SDL_CreateWindow("Darwin - Eat, don't be eaten!", SDL_WINDOWPOS_CENTERED,
                                 SDL_WINDOWPOS_CENTERED, screen_width,
                                 screen_height, SDL_WINDOW_SHOWN);
 
@@ -38,7 +38,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, SDL_Point const &food, std::vector<std::shared_ptr<Entity>> wall, std::shared_ptr<Entity> opponent) {
+void Renderer::Render(Player player,  std::vector<std::shared_ptr<Entity>> food, std::vector<std::shared_ptr<Entity>> wall, std::shared_ptr<Opponent> opponent) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
@@ -48,18 +48,23 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, std::vector<std:
   SDL_RenderClear(sdl_renderer);
 
   // Render food
-  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
-  block.x = food.x * block.w;
-  block.y = food.y * block.h;
-  SDL_RenderFillRect(sdl_renderer, &block);
+  if (!food.empty()) {
+    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
+    for (std::shared_ptr<Entity> fooditem : food) {
+      block.x = fooditem->GetPosition().x * block.w;
+      block.y = fooditem->GetPosition().y * block.h;
+      SDL_RenderFillRect(sdl_renderer, &block);
+    }
+  }
 
   // Render wall
-  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-  for (std::shared_ptr<Entity> brick : wall) {
-    SDL_Point point = brick->GetPosition();
-    block.x = point.x * block.w;
-    block.y = point.y * block.h;
-    SDL_RenderFillRect(sdl_renderer, &block);
+  if (!wall.empty()) {
+    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    for (std::shared_ptr<Entity> brick : wall) {      
+      block.x = brick->GetPosition().x * block.w;
+      block.y = brick->GetPosition().y * block.h;
+      SDL_RenderFillRect(sdl_renderer, &block);
+    }
   }
 
   // Render opponent
@@ -68,10 +73,10 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, std::vector<std:
   block.y = opponent->GetPosition().y * block.h;
   SDL_RenderFillRect(sdl_renderer, &block);
 
-  // Render snake's head
-  block.x = static_cast<int>(snake._x) * block.w;
-  block.y = static_cast<int>(snake._y) * block.h;
-  if (snake.alive) {
+  // Render player
+  block.x = player.GetPosition().x * block.w;
+  block.y = player.GetPosition().y * block.h;
+  if (player.alive) {
     SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
   } else {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
@@ -82,7 +87,7 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, std::vector<std:
   SDL_RenderPresent(sdl_renderer);
 }
 
-void Renderer::UpdateWindowTitle(int score, int fps) {
-  std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
+void Renderer::UpdateWindowTitle(int playerScore, int opponentScore, int fps) {
+  std::string title{"DARWIN - Eat or be eaten || Player's Score: " + std::to_string(playerScore) + ", Opponents's Score: " + std::to_string(opponentScore) + " || FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }

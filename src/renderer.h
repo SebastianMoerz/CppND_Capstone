@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "SDL.h"
-#include "snake.h"
+#include "player.h"
 #include "entity.h"
 #include <memory>
 
@@ -13,8 +13,8 @@ class Renderer {
            const std::size_t grid_width, const std::size_t grid_height);
   ~Renderer();
 
-  void Render(Snake const snake, SDL_Point const &food, std::vector<std::shared_ptr<Entity>> wall, std::shared_ptr<Entity> opponent);
-  void UpdateWindowTitle(int score, int fps);
+  void Render(Player player, std::vector<std::shared_ptr<Entity>> food, std::vector<std::shared_ptr<Entity>> wall, std::shared_ptr<Opponent> opponent);
+  void UpdateWindowTitle(int playerScore, int opponentScore, int fps);
 
  private:
   SDL_Window *sdl_window;
