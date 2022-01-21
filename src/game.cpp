@@ -16,7 +16,7 @@ Game::Game(std::size_t grid_width, std::size_t grid_height, std::size_t grid_mar
       _wall.emplace_back(std::make_shared<Entity>(grid_width-grid_margin-1, a, Entity::Type::kObstacle));    // right wall
   }  
   PlaceFood();  
-  _opponent = std::make_shared<Opponent>(-1, -1, Entity::Type::kNPC, engine);
+  _opponent = std::make_shared<Opponent>(-1, -1, Entity::Type::kNPC);
   PlaceOpponent();
 }
 
@@ -65,13 +65,14 @@ void Game::PlaceFood() {
       x = random_w(engine);
       y = random_h(engine);
       point = {x,y};      
-      if (!_player.PlayerCell(x, y) && !this->checkCollisionWithWall(point) && !this->checkCollisionWithFood(point, false)) {     
+      if (!this->DetectCollision(point, &_player) && !this->DetectCollision(point, _wall) && !this->DetectCollision(point, _food)) {     
         _food.emplace_back(std::make_shared<Entity>(x, y, Entity::Type::kFood));  
         break;
       }
     }
   }
 }
+
 void Game::PlaceOpponent() {
   int x, y;
   SDL_Point point;
@@ -80,7 +81,7 @@ void Game::PlaceOpponent() {
     y = random_h(engine);
     point = {x,y};
     // Check that the location is not occupied by a Player item before placing food.
-    if (!_player.PlayerCell(x, y) && !this->checkCollisionWithWall(point) && !this->checkCollisionWithFood(point, false)) {
+    if (!this->DetectCollision(point, &_player) && !this->DetectCollision(point, _wall) && !this->DetectCollision(point, _food)) {
       _opponent->SetPosition(point);
       return;
     }
@@ -94,77 +95,74 @@ void Game::Update() {
   // only try to move if direction is not none to avoid unnecessary checkCollision loops.
   if (_player.direction != Player::Direction::kNone) {
     SDL_Point requestedPosition = _player.tryMove();
-    if (this->checkCollisionWithOpponent(requestedPosition)) {
+    if (this->DetectCollision(requestedPosition, _opponent.get())) {
       _player.alive = false;
     }
     else {
-      if (!this->checkCollisionWithWall(requestedPosition)) {_player.SetPosition(requestedPosition);}
+      if (!this->DetectCollision(requestedPosition, _wall)) {_player.SetPosition(requestedPosition);}
     }
-    if (this->checkCollisionWithFood(_player.GetPosition(), true)) {
+    if (this->DetectCollision(&_player, _food, true)) {
       _playerScore++;
     };
   }
 
-
   // only try to move if it's the opponents turn to avoid unnecessary checkCollision loops.
   if (_opponent->isMyTurn()) {
     SDL_Point requestedPosition = _opponent->tryMove();
-    if (this->checkCollisionWithPlayer(requestedPosition)) {
+    if (this->DetectCollision(requestedPosition, &_player)) {
       _player.alive = false;
     }
     else {
-      if (!this->checkCollisionWithWall(requestedPosition)) {_opponent->SetPosition(requestedPosition);}
+      if (!this->DetectCollision(requestedPosition, _wall)) {_opponent->SetPosition(requestedPosition);}
     }
-    if (this->checkCollisionWithFood(_opponent->GetPosition(), true)) {
+    if (this->DetectCollision(_opponent.get(), _food, true)) {
       _opponentScore++;
     };
   }
 }
-
-  //int new_x = static_cast<int>(player._x);
-  // int new_y = static_cast<int>(player._y);
- 
 
 int Game::GetPlayerScore() const { return _playerScore; }
 int Game::GetOpponentScore() const { return _opponentScore; }
 int Game::GetSize() const { return 0; }
 
 
-
-bool Game::checkCollisionWithWall(SDL_Point const & point) {
-  if (!_wall.empty()) {
-    for (std::shared_ptr<Entity> brick : _wall) {    
-      if (brick->GetPosition().x == point.x && brick->GetPosition().y == point.y) {return true;}    
-    }
+bool Game::DetectCollision(SDL_Point point, Entity *entity) {
+  if (entity != nullptr) {
+    return (point.x == entity->GetPosition().x && point.y == entity->GetPosition().y);
   }
   return false;
 }
 
-bool Game::checkCollisionWithOpponent(SDL_Point const & point) {
-  if (_opponent->GetPosition().x == point.x && _opponent->GetPosition().y == point.y) {
-    //_player.alive = false;
-    return true;
+bool Game::DetectCollision(Entity *first, Entity *second) {
+  if (first != nullptr && second != nullptr) {
+    return (first->GetPosition().x == second->GetPosition().x && first->GetPosition().y == second->GetPosition().y);
   }
-  return false; 
-}
-
-bool Game::checkCollisionWithPlayer(SDL_Point const & point) {
-  if (_player.GetPosition().x == point.x && _player.GetPosition().y == point.y) {
-    //_player.alive = false;
-    return true;
-  } 
   return false;
 }
 
+bool Game::DetectCollision(Entity *first, std::vector<std::shared_ptr<Entity>> &second) {
+  if (first != nullptr && !second.empty()) {
+    auto it = std::find_if(second.begin(), second.end(), [&first](const std::shared_ptr<Entity>& item){return first->GetPosition().x == item->GetPosition().x && first->GetPosition().y == item->GetPosition().y;});
+    if (it != second.end()) { return true; }  
+  }  
+  return false;
+}
 
-bool Game::checkCollisionWithFood(SDL_Point const & point, bool erase) {    
-  if (!_food.empty()) { 
-    auto it = std::find_if(_food.begin(), _food.end(), [&point](const std::shared_ptr<Entity>& f){return point.x == f->GetPosition().x && point.y == f->GetPosition().y;});
-    if (it != _food.end()) {       
-      if (erase) {_food.erase(it);}
+bool Game::DetectCollision(SDL_Point point, std::vector<std::shared_ptr<Entity>> &entities) {
+  if (!entities.empty()) {
+    auto it = std::find_if(entities.begin(), entities.end(), [&point](const std::shared_ptr<Entity>& item){return point.x == item->GetPosition().x && point.y == item->GetPosition().y;});
+    if (it != entities.end()) { return true; }  
+  }  
+  return false;
+}
+
+bool Game::DetectCollision(Entity *first, std::vector<std::shared_ptr<Entity>> &second, bool erase) {
+  if (first != nullptr && !second.empty()) {
+    auto it = std::find_if(second.begin(), second.end(), [&first](const std::shared_ptr<Entity>& item){return first->GetPosition().x == item->GetPosition().x && first->GetPosition().y == item->GetPosition().y;});
+    if (it != second.end()) {       
+      if (erase) {second.erase(it);}
       return true;
     }  
   }  
   return false;
 }
-

@@ -5,8 +5,8 @@
 
 SDL_Point Player::tryMove() { 
   // temporary position
-  int x = _position.x;
-  int y = _position.y;
+  int x = this->GetPosition().x;
+  int y = this->GetPosition().y;
   // calculate requested move
   switch (direction) {
     case Direction::kNone:
@@ -41,7 +41,7 @@ SDL_Point Player::tryMove() {
 
 // Inefficient method to check if cell is occupied by Player.
 bool Player::PlayerCell(int x, int y) {
-  if (x == static_cast<int>(_x) && y == static_cast<int>(_y)) {
+  if (x == this->GetPosition().x && y == this->GetPosition().y) {
     return true;
   }
   return false;

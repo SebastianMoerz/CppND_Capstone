@@ -6,16 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/controller.cpp
-controller.h
-/home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/controller.h
-iostream
--
-SDL.h
-/home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/SDL.h
-player.h
-/home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/player.h
-
 /home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/controller.h
 player.h
 /home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/player.h
@@ -68,14 +58,6 @@ game.h
 renderer.h
 /home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/renderer.h
 
-/home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/player.cpp
-player.h
-/home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/player.h
-cmath
--
-iostream
--
-
 /home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/player.h
 vector
 -
@@ -83,14 +65,6 @@ SDL.h
 /home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/SDL.h
 entity.h
 /home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/entity.h
-
-/home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/renderer.cpp
-renderer.h
-/home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/renderer.h
-iostream
--
-string
--
 
 /home/widgeteer/Desktop/udacity-cpp/capstone/DungeonsOfEllesmere/src/renderer.h
 vector

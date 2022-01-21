@@ -22,15 +22,14 @@ class Game {
   int GetSize() const;
 
   // new
-  bool checkCollisionWithWall(SDL_Point const &point);
-  bool checkCollisionWithOpponent(SDL_Point const & point);
-  bool checkCollisionWithFood(SDL_Point const & point, bool erase);
-  bool checkCollisionWithPlayer(SDL_Point const & point);
-  //Entity* getBlockingObject(SDL_Point const & point);
+  bool DetectCollision(SDL_Point point, Entity *entity);
+  bool DetectCollision(Entity *first, Entity *second);
+  bool DetectCollision(Entity *first, std::vector<std::shared_ptr<Entity>> &second);
+  bool DetectCollision(SDL_Point point, std::vector<std::shared_ptr<Entity>> &entities);
+  bool DetectCollision(Entity *first, std::vector<std::shared_ptr<Entity>> &second, bool erase);
 
  private:
 
-  //std::vector<Entity> _allObjects; 
   std::vector<std::shared_ptr<Entity>> _wall; 
   std::vector<std::shared_ptr<Entity>> _food;
   std::shared_ptr<Opponent> _opponent;
@@ -45,12 +44,9 @@ class Game {
   int _playerScore{0};
   int _opponentScore{0};
 
-  void PlaceFood();  
-  void Update();
-
-  // new
-  //void PlaceEntity(Entity& entity);
-  void PlaceOpponent();
+  void PlaceFood(); 
+  void PlaceOpponent(); 
+  void Update();  
 };
 
 #endif
