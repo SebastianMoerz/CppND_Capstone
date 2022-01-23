@@ -2,9 +2,11 @@
 #include <iostream>
 #include "SDL.h"
 #include <algorithm>
+#include <game_utils.h>
 
 Game::Game(std::size_t grid_width, std::size_t grid_height, std::size_t grid_margin)
-    : _player(grid_width, grid_height), engine(dev()), random_w(0, static_cast<int>(grid_width - 1)),random_h(0, static_cast<int>(grid_height - 1)) {
+    : _grid_max_x(grid_width), _grid_max_y(grid_height), _player(grid_width, grid_height), engine(dev()), 
+      random_w(0, static_cast<int>(grid_width - 1)),random_h(0, static_cast<int>(grid_height - 1)) {
 
   // generate wall around screen    
   for (std::size_t a = grid_margin; a < grid_width-grid_margin; a++) {  
@@ -34,7 +36,7 @@ void Game::Run(Controller const &controller, Renderer &renderer, std::size_t tar
 
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, _paused, _player);
-    if (!_paused) {
+    if (!_paused && !_won && _player.alive) {
       Update();
     }
     renderer.Render(_player, _food, _wall, _opponent);
@@ -90,7 +92,7 @@ void Game::PlaceOpponent() {
   }
 
 }
-  
+ 
 void Game::Update() {
   if (!_player.alive) return;
 
@@ -109,8 +111,10 @@ void Game::Update() {
   }
 
   // only try to move if it's the opponents turn to avoid unnecessary checkCollision loops.
-  if (_opponent->isMyTurn()) {
-    SDL_Point requestedPosition = _opponent->tryMove();
+  if(_opponent->isMyTurn()) {
+    //SDL_Point requestedPosition = _opponent->tryMove();
+    SDL_Point requestedPosition = GameUtils::MoveTowardTarget(GetMapOfObstacles(), _opponent->GetPosition(), _player.GetPosition());
+    
     if (this->DetectCollision(requestedPosition, &_player)) {
       _player.alive = false;
     }
@@ -119,7 +123,16 @@ void Game::Update() {
     }
     if (this->DetectCollision(_opponent.get(), _food, true)) {
       _opponentScore++;
+      _opponent->Feed();
     };
+  }
+
+  if (!_player.alive) { 
+    std::cout << "GAME OVER: You were eaten!" << std::endl;
+  }
+  if (_food.empty()) { 
+    _won = true;
+    std::cout << "YOU WON!" << std::endl;
   }
 }
 
@@ -167,4 +180,24 @@ bool Game::DetectCollision(Entity *first, std::vector<std::shared_ptr<Entity>> &
     }  
   }  
   return false;
+}
+
+std::vector<std::vector<Entity::Type>> Game::GetMapOfObstacles () {
+  std::vector<std::vector<Entity::Type>> grid {};
+  std::vector<Entity::Type> row {};
+  
+  // init emtpy grid (of for,at grid[y][x])
+  for (int y = 0; y < _grid_max_y; y++) {
+    row.clear();
+    for (int x = 0; x < _grid_max_x; x++) {
+      row.push_back(Entity::Type::kNone);
+    }
+    grid.push_back(row);
+  }  
+
+  // add obstacles to grid - in this case only the wall blocks
+  for (std::shared_ptr<Entity> brick : this->_wall) {
+    grid[brick->GetPosition().y][brick->GetPosition().x] = Entity::Type::kObstacle;    
+  }  
+  return grid;
 }

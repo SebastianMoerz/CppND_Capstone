@@ -28,11 +28,16 @@ class Game {
   bool DetectCollision(SDL_Point point, std::vector<std::shared_ptr<Entity>> &entities);
   bool DetectCollision(Entity *first, std::vector<std::shared_ptr<Entity>> &second, bool erase);
 
+  std::vector<std::vector<Entity::Type>> GetMapOfObstacles();
+
  private:
 
   std::vector<std::shared_ptr<Entity>> _wall; 
   std::vector<std::shared_ptr<Entity>> _food;
   std::shared_ptr<Opponent> _opponent;
+
+  std::size_t _grid_max_x;
+  std::size_t _grid_max_y;
 
   Player _player;  
 
@@ -45,6 +50,7 @@ class Game {
   int _opponentScore{0};
 
   bool _paused{false};
+  bool _won{false};
 
   void PlaceFood(); 
   void PlaceOpponent(); 

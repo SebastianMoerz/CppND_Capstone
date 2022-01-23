@@ -51,6 +51,7 @@ CMakeFiles/Darwin.dir/src/controller.cpp.o: /usr/include/SDL2/SDL_video.h
 CMakeFiles/Darwin.dir/src/controller.cpp.o: /usr/include/SDL2/begin_code.h
 CMakeFiles/Darwin.dir/src/controller.cpp.o: /usr/include/SDL2/close_code.h
 
+CMakeFiles/Darwin.dir/src/game.cpp.o: ../src/game_utils.h
 CMakeFiles/Darwin.dir/src/game.cpp.o: ../src/controller.h
 CMakeFiles/Darwin.dir/src/game.cpp.o: ../src/entity.h
 CMakeFiles/Darwin.dir/src/game.cpp.o: ../src/game.cpp

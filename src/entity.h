@@ -11,7 +11,7 @@
 class Entity {
  public:
  
-  enum class Type { kObstacle, kFood, kPlayer, kNPC}; // rather use inheritance instead of type?
+  enum class Type { kNone, kObstacle, kFood, kPlayer, kNPC}; // rather use inheritance instead of type?
   enum class Direction { kUp, kDown, kLeft, kRight, kNone };
     
   Entity(int x, int y, Type type) : _position({x,y}), _type(type) {}
@@ -30,7 +30,7 @@ private:
 
 class Opponent : public Entity {
   public:
-   Opponent(int x, int y, Type type) : Entity(x, y, type) {}
+   Opponent(int x, int y, Type type) : Entity(x, y, type) { _speed = _startSpeed;}
    
    SDL_Point tryMove() {
       int direction = rand() % 5; // using std::rand() only as POC for moving
@@ -62,10 +62,11 @@ class Opponent : public Entity {
       return requestedPosition;     
    };
 
+  void Feed() { if (_speed > 1) {--_speed;}}
 
  bool isMyTurn() {
     ++_turnCounter;    
-    if (_turnCounter>speed) {
+    if (_turnCounter>_speed) {
       _turnCounter = 0;
       return true;
     }
@@ -74,10 +75,9 @@ class Opponent : public Entity {
 
   private:
     int _turnCounter{0};
-    const int speed = 3;    
+    int _speed;
+    const int _startSpeed = 15;    
 };
-
-
  
 
 #endif
