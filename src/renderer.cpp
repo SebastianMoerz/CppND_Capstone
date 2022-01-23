@@ -38,7 +38,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Player player,  std::vector<std::shared_ptr<Entity>> food, std::vector<std::shared_ptr<Entity>> wall, std::shared_ptr<Opponent> opponent) {
+void Renderer::Render(Player player,  std::vector<std::shared_ptr<Entity>> food, std::vector<std::shared_ptr<Entity>> wall, std::vector<std::shared_ptr<Opponent>> opponents) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
@@ -67,11 +67,15 @@ void Renderer::Render(Player player,  std::vector<std::shared_ptr<Entity>> food,
     }
   }
 
-  // Render opponent
-  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
-  block.x = opponent->GetPosition().x * block.w;
-  block.y = opponent->GetPosition().y * block.h;
-  SDL_RenderFillRect(sdl_renderer, &block);
+  // Render opponents
+  if (!opponents.empty()) {
+    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
+    for (std::shared_ptr<Entity> opponent : opponents) {
+      block.x = opponent->GetPosition().x * block.w;
+      block.y = opponent->GetPosition().y * block.h;
+      SDL_RenderFillRect(sdl_renderer, &block);
+    }
+  }
 
   // Render player
   block.x = player.GetPosition().x * block.w;

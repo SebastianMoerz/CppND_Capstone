@@ -1,1 +1,1 @@
-/usr/bin/c++     CMakeFiles/Darwin.dir/src/main.cpp.o CMakeFiles/Darwin.dir/src/game.cpp.o CMakeFiles/Darwin.dir/src/controller.cpp.o CMakeFiles/Darwin.dir/src/renderer.cpp.o CMakeFiles/Darwin.dir/src/player.cpp.o  -o Darwin  -lSDL2 
+/usr/bin/c++     CMakeFiles/Darwin.dir/src/main.cpp.o CMakeFiles/Darwin.dir/src/game.cpp.o CMakeFiles/Darwin.dir/src/controller.cpp.o CMakeFiles/Darwin.dir/src/renderer.cpp.o CMakeFiles/Darwin.dir/src/player.cpp.o CMakeFiles/Darwin.dir/src/opponent.cpp.o  -o Darwin  -lSDL2 

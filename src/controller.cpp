@@ -1,9 +1,9 @@
-#include "controller.h"
 #include <iostream>
 #include <string>
+
+#include "controller.h"
 #include "SDL.h"
 #include "player.h"
-
 
 void Controller::HandleInput(bool &running, bool &paused,  Player &player) const {
   SDL_Event e;

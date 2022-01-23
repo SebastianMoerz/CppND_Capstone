@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "player.h"
 #include "entity.h"
+#include "opponent.h"
 #include <memory>
 
 class Renderer {
@@ -13,7 +14,7 @@ class Renderer {
            const std::size_t grid_width, const std::size_t grid_height);
   ~Renderer();
 
-  void Render(Player player, std::vector<std::shared_ptr<Entity>> food, std::vector<std::shared_ptr<Entity>> wall, std::shared_ptr<Opponent> opponent);
+  void Render(Player player, std::vector<std::shared_ptr<Entity>> food, std::vector<std::shared_ptr<Entity>> wall, std::vector<std::shared_ptr<Opponent>> opponents);
   void UpdateWindowTitle(int playerScore, int opponentScore, int fps);
 
  private:

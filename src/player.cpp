@@ -1,9 +1,8 @@
 #include "player.h"
-#include <cmath>
-#include <iostream>
 
-
-SDL_Point Player::tryMove() { 
+// calculate new player position based on user input
+SDL_Point Player::tryMove() 
+{ 
   // temporary position
   int x = this->GetPosition().x;
   int y = this->GetPosition().y;
@@ -31,18 +30,6 @@ SDL_Point Player::tryMove() {
   // reset direction after moving
   direction = Direction::kNone;
 
-  // Wrap the Player around to the beginning if going off of the screen.
-  x = fmod(x + grid_width, grid_width);
-  y = fmod(y + grid_height, grid_height);
-
   SDL_Point requestedPosition{x,y};
   return requestedPosition;
-}
-
-// Inefficient method to check if cell is occupied by Player.
-bool Player::PlayerCell(int x, int y) {
-  if (x == this->GetPosition().x && y == this->GetPosition().y) {
-    return true;
-  }
-  return false;
 }

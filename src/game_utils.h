@@ -1,13 +1,14 @@
 #ifndef GAME_UTILS_H
 #define GAME_UTILS_H
 
+// helper functions for the game. currently includes an A-Star search algorithm to help moving the opponent toward the player
+// the A-Star search code is a slightly modified version of the Udacity C++ Nanodegree course material 
+
 #include <algorithm>  // for sort
 #include <string>
 #include <vector>
 #include "SDL.h"
 #include "entity.h"
-
-#include <iostream>  // debug only
 
 using std::sort;
 using std::string;

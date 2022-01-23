@@ -204,6 +204,33 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/Darwin.dir/build.make CMakeFiles/Darwin.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/opponent.o: src/opponent.cpp.o
+
+.PHONY : src/opponent.o
+
+# target to build an object file
+src/opponent.cpp.o:
+	$(MAKE) -f CMakeFiles/Darwin.dir/build.make CMakeFiles/Darwin.dir/src/opponent.cpp.o
+.PHONY : src/opponent.cpp.o
+
+src/opponent.i: src/opponent.cpp.i
+
+.PHONY : src/opponent.i
+
+# target to preprocess a source file
+src/opponent.cpp.i:
+	$(MAKE) -f CMakeFiles/Darwin.dir/build.make CMakeFiles/Darwin.dir/src/opponent.cpp.i
+.PHONY : src/opponent.cpp.i
+
+src/opponent.s: src/opponent.cpp.s
+
+.PHONY : src/opponent.s
+
+# target to generate assembly for a file
+src/opponent.cpp.s:
+	$(MAKE) -f CMakeFiles/Darwin.dir/build.make CMakeFiles/Darwin.dir/src/opponent.cpp.s
+.PHONY : src/opponent.cpp.s
+
 src/player.o: src/player.cpp.o
 
 .PHONY : src/player.o
@@ -276,6 +303,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/opponent.o"
+	@echo "... src/opponent.i"
+	@echo "... src/opponent.s"
 	@echo "... src/player.o"
 	@echo "... src/player.i"
 	@echo "... src/player.s"
