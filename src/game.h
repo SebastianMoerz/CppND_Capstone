@@ -44,9 +44,11 @@ class Game {
   int _playerScore{0};
   int _opponentScore{0};
 
+  bool _paused{false};
+
   void PlaceFood(); 
   void PlaceOpponent(); 
-  void Update();  
+  void Update();    
 };
 
 #endif

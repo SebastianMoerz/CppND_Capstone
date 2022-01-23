@@ -5,7 +5,7 @@
 
 class Controller {
  public:
-  void HandleInput(bool &running, Player &player) const;
+  void HandleInput(bool &running, bool &paused, Player &player) const;
 
  private:  
 };
