@@ -16,7 +16,7 @@ Renderer::Renderer(const std::size_t screen_width,
   }
 
   // Create Window
-  sdl_window = SDL_CreateWindow("Darwin - Eat, don't be eaten!", SDL_WINDOWPOS_CENTERED,
+  sdl_window = SDL_CreateWindow("DARWIN - Eat or be eaten   ||    Score: 0", SDL_WINDOWPOS_CENTERED,
                                 SDL_WINDOWPOS_CENTERED, screen_width,
                                 screen_height, SDL_WINDOW_SHOWN);
 
@@ -92,6 +92,11 @@ void Renderer::Render(Player player,  std::vector<std::shared_ptr<Entity>> food,
 }
 
 void Renderer::UpdateWindowTitle(int playerScore, int opponentScore, int fps) {
-  std::string title{"DARWIN - Eat or be eaten || Player's Score: " + std::to_string(playerScore) + ", Opponents's Score: " + std::to_string(opponentScore) + " || FPS: " + std::to_string(fps)};
+  // use this line for debug output (fps)
+  // std::string title{"DARWIN - Eat or be eaten || FPS: " + std::to_string(fps)};
+  // use this line for output of player & opponent score
+  // std::string title{"DARWIN - Eat or be eaten || Player's Score: " + std::to_string(playerScore) + ", Opponents's Score: " + std::to_string(opponentScore)};
+  // use this line for output of player score only
+  std::string title{"DARWIN - Eat or be eaten   ||    Score: " + std::to_string(playerScore)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }

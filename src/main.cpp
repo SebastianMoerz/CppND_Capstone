@@ -12,7 +12,7 @@ int main() {
   constexpr std::size_t kGridHeight{32};
   constexpr std::size_t kGridMargin{1}; 
   constexpr std::size_t kNumberOfFoodItems{40}; 
-  constexpr std::size_t kNumberOfOpponents{1}; 
+  constexpr std::size_t kNumberOfOpponents{3}; 
   constexpr std::size_t kInitialOpponentSpeed{15};  // number of loops per step, i.e. the lower, the faster
   constexpr std::size_t kMinStartDistance{10};      // minimum allowed distance between player and opponent at the start of the game
 

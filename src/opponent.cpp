@@ -2,7 +2,7 @@
     #include "SDL.h"
     #include "opponent.h"
 
-    void Opponent::Feed() { if (_speed > 2) {_speed -= 2;}}
+    void Opponent::Feed() { if (_speed > 1) {_speed -= 1;}}
 
     bool Opponent::isMyTurn() 
     {
